@@ -1,5 +1,6 @@
-# enablement-dql-301
-dynatrace query language advanced concepts hands on training
+
+# enablement-dql301
+Dynatrace DTU lab guide for DQL 301
 
 ---
 
@@ -17,6 +18,7 @@ git clone https://github.com/dynatrace-wwse/enablement-dql-301.git
 
 Install Node if not already installed:
 [Download Node.js](https://nodejs.org/en/download/package-manager)
+
 
 Move to the lab-guide directory:
 ```sh
