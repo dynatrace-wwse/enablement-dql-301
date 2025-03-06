@@ -2,7 +2,7 @@
 
 ### Import Notebook into Dynatrace
 
-[Notebook](https://github.com/popecruzdt/dt-k8s-otel-o11y-logs/blob/code-spaces/dt-k8s-otel-o11y-logs_dt_notebook.json)
+[Notebook](https://github.com/jwood1985/enablement-dql301/blob/main/assets/json/DQL%20301%20-%20WWSE%20Professors%20Enablement.json)
 
 ### Including Raw Data with `data`
 The `data` command provides an easy way to add any data you care about into a Notebook, Dashboard, Workflow, or any other component that uses DQL. This is most useful when pulling in data from other sources (i.e., Excel, CSV, etc.) or consolidating data from another query into a DQL statement. 
@@ -25,18 +25,79 @@ fetch dt.entity.process_group_instance
 | summarize count=count(), by:{productName}
 ```
 
-**⏩ Try it out**: Now, see if you can take the column `productName` and transform it into a new `data` array with the key `productName` and the value of these product names. Hint: you will need to use `concat` and export the data as a CSV. 
+Your customer then tells you that they have different business units and business criticality values based on what application / product is in use. Those business units and criticality values are outlined in the table below.
+
+Product Name | Business Unit | Criticality
+--- | --- | ---
+EasyTrade | Financial Services | HI
+EasyTravel | Retail | HI
+HipsterShop | Retail | LO
+
+Let's build out the `data` array to include `productName`, `businessUnit`, and `criticality` record values accordingly:
+```
+data record(productName="easytrade",businessUnit="Financial Services",criticality="HI"),
+record(productName="easytravel",businessUnit="Retail",criticality="HI"),
+record(productName="hipstershop",businessUnit="Retail",criticality="LO")
+```
+
+You can now associate these new fields for `businessUnit` and `criticality` to any other entity that has the `productName` tag attached to it. 
+
+To improve query performance, you can run a query once to get the fields you care about and then reuse that static or quasi-static field in other queries. Say you want to understand your application requests from the perspective of what OS version their underlying compute is running (Amazon Linux, Ubuntu Bionic Beaver, etc.). You want to know this because you are trying to plan for patching cycles and how you will maintain those systems for different, high-throughput apps. You know that these OS versions are LTS, and therefore constant. 
+
+Let's look at the query which would gather those OS versions:
 
 ```
-fetch dt.entity.process_group_instance
-| fieldsAdd tags
-| fieldsAdd tagsToString = toString(tags)
-| parse tagsToString, """DATA 'DT_RELEASE_PRODUCT:' LD:productName '\",' DATA EOF"""
-| filter isNotNull(productName)
-| summarize count=count(), by:{productName}
-| fieldsAdd outputRecord = concat("record(productName=\"..."))
+fetch spans, from:now()-1h, to:now() 
+| fieldsAdd dt.entity.service
+| fieldsAdd dt.entity.service.id = entityAttr(dt.entity.service,"id")
+| fieldsAdd dt.entity.service.entity.name = entityName(dt.entity.service)
+| fieldsAdd pgiRunsOn = entityAttr(dt.entity.service,"runs_on")
+| fieldsAdd pgiIds = pgiRunsOn[dt.entity.process_group_instance]
+| expand pgiId = pgiIds
+| join
+[
+  fetch dt.entity.process_group_instance
+  | fieldsAdd id, entity.name
+  | fieldsAdd hostId = belongs_to[dt.entity.host]
+], on:{left[pgiId]==right[id]}, kind:{inner}, prefix:"pgi."
+| join
+[
+  fetch dt.entity.host
+  | fieldsAdd id, entity.name
+  | fieldsAdd osVersion
+], on:{left[pgi.hostId]==right[id]}, kind:{inner}, prefix:"host."
+| fields dt.entity.service.entity.name, dt.entity.service.id, host.entity.name, host.osVersion
+| filter contains(host.osVersion, "Ubuntu")
+| summarize count=countDistinct(host.osVersion), by:{host.osVersion,dt.entity.service.id}
+| fieldsAdd dataRecord = concat("record(dt.entity.service.id=\"",dt.entity.service.id,"\",hostOs=\"",host.osVersion,"\"),")
+| limit 10
 ```
-![Data for Export](../../../assets/images/data_for_export.png)
+
+**⏩ Try it out**: Now, see if you can take the column `dataRecord` and copy it into another query after the `// ADD QUERY HERE` line. Run that query and the subsequent one without the `data` record. Note the differences in performance.  
+
+Snippet:
+```
+fetch spans, from:now()-1h, to:now() 
+| fieldsAdd dt.entity.service
+| fieldsAdd dt.entity.service.id = entityAttr(dt.entity.service,"id")
+| fieldsAdd dt.entity.service.entity.name = entityName(dt.entity.service)
+| join
+[ 
+// ADD QUERY HERE
+
+], on:{dt.entity.service.id}, kind:{inner}, prefix:"host."
+| fieldsRemove host.dt.entity.service.id
+| fields trace.id, span.id, dt.entity.service.entity.name, span.name, host.hostOs, duration
+| summarize count=count(), by:{dt.entity.service.entity.name, host.hostOs}
+| sort count desc
+```
+In the screenshots below, you can clearly see the difference in performance with `data` and without it.
+
+With `data`:
+![With data Record Performance](../../../assets/images/with_data_record_performance.png)
+
+Without `data`:
+![No data Record Performance](../../../assets/images/no_data_record_performance.png)
 
 The ability to add data on demand - particularly for non-DQL data sources and for quasi-static, long-running DQL queries - is a powerful way to add data into your DQL statements.
 
