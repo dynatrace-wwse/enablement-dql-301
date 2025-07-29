@@ -33,5 +33,5 @@ By the end of this session, students will have a deeper understanding of advance
 In the next section, we'll learn how to add Data using the data and append commands, connect Data with join and lookup, and Data transformation. 
 
 <div class="grid cards" markdown>
-- [Continue to Data Transformation:octicons-arrow-right-24:](5-data-transformation.md)
+- [Continue To Data Transformation:octicons-arrow-right-24:](5-data-transformation.md)
 </div>
