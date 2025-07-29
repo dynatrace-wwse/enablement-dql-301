@@ -1,6 +1,6 @@
 <!--TODO: Update Lab Task -->
 <!--TODO: Update bizevent code snippet -->
---8<-- "snippets/send-bizevent/6-wrap-up.js"
+--8<-- "snippets/send-bizevent/4-wrap-up.js"
 
 ### What You Learned Today 
 You explored how to connect data using the `append`, `data`, `lookup`, and `join` commands in DQL to combine data from multiple sources. 
@@ -42,11 +42,3 @@ Types of Joins:
 * Outer Join (kind: outer): Returns all matching and non-matching records from both tables.
 
 By mastering these concepts, you can effectively connect and analyze data in Dynatrace, enhancing your observability and monitoring capabilities. Keep practicing with the provided exercises to solidify your understanding! 🚀
-
-## Continue
-<!--TODO: Update Continue Section -->
-In the next section, we'll cleanup as part of post-lab.
-
-<div class="grid cards" markdown>
-- [Continue To Cleanup:octicons-arrow-right-24:](cleanup.md)
-</div>

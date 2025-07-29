@@ -18,8 +18,6 @@ During this hands-on training lab, ...
 
 3. Task 3
 
-10. Clean up GitHub codespaces instance
-
 <!--TODO: Update tech spec of lab components -->
 ## Technical Specification
 
