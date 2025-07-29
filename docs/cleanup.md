@@ -7,3 +7,11 @@
 Another way to do this is by going to [https://github.com/codespaces](https://github.com/codespaces){target=_blank} and delete the codespace.
 
 You may also want to deactivate or delete the API token needed for this lab.
+
+## Continue
+<!--TODO: Update Continue Section -->
+In the next section, we'll go over additional resources to accompany this lab. 
+
+<div class="grid cards" markdown>
+- [Continue To Resources:octicons-arrow-right-24:](resources.md)
+</div>

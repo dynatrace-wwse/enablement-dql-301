@@ -38,8 +38,8 @@ During this hands-on training lab, ...
 
 ## Continue
 
-In the next section, we'll review the prerequisites for this lab needed before launching our Codespaces instance.
+In the next section, we'll get started with the lab.
 
 <div class="grid cards" markdown>
-- [Continue to getting started:octicons-arrow-right-24:](2-getting-started.md)
+- [Continue To Getting Started:octicons-arrow-right-24:](2-getting-started.md)
 </div>

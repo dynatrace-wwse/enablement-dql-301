@@ -1,7 +1,6 @@
 <!--TODO: Update Lab Task -->
-# Lab Task
 <!--TODO: Update bizevent code snippet -->
---8<-- "snippets/send-bizevent/4-content-placeholder.js"
+--8<-- "snippets/send-bizevent/3-content-placeholder.js"
 
 <!--TODO: Update Lab task and learn more link -->
 Lab task description and primer
@@ -25,8 +24,8 @@ Sub Step Details
 
 ## Continue
 <!--TODO: Update Continue Section -->
-In the next section, we'll ...
+In the next section, we'll go over the prerequisites for this Dynatrace enablement lab. 
 
 <div class="grid cards" markdown>
-- [Continue to ...:octicons-arrow-right-24:](next-page.md)
+- [Continue To Prerequisites:octicons-arrow-right-24:](4-prereq.md)
 </div>

@@ -1,15 +1,17 @@
 # TODO: change site_name and repo_url to match your repo
-site_name: "Dynatrace Enablement Lab: Codespaces template"
+site_name: "Dynatrace Enablement Lab: DQL 301 - Data Transformation "
 repo_name: "View Code on GitHub"
 repo_url: "https://github.com/dynatrace-wwse/enablement-codespaces-template"
 nav:
   - '1. About': index.md
   - '2. Getting started': 2-getting-started.md
-  - '3. Codespaces': 3-codespaces.md
-  - '4. Content': 4-content.md
-  - '5. Cleanup': cleanup.md
-  - '6. Resources': resources.md
-  - "7. What's next?": whats-next.md
+  - '3. Content': 3-content-placeholder.md
+  - '4. Prereq': 4-prereq.md
+  - '5. Data Transformation': 5-data-transformation.md
+  - '6. Wrap Up': 6-wrap-up.md
+  - '7. Cleanup': cleanup.md
+  - '8. Resources': resources.md
+  - "9. What's next?": whats-next.md
 theme:
   name: material
   custom_dir: docs/overrides

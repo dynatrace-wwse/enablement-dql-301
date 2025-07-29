@@ -26,8 +26,8 @@ Prerequisite 2 Details
 
 ## Continue
 
-In the next section, we'll launch our Codespaces instance.
+In the next section, we'll take a look at the content of this lab.
 
 <div class="grid cards" markdown>
-- [Continue to Codespaces:octicons-arrow-right-24:](3-codespaces.md)
+- [Continue To Content:octicons-arrow-right-24:](3-content-placeholder.md)
 </div>
