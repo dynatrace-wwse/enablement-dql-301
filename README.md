@@ -1,40 +1,36 @@
+author: Josh Wood
 
 # enablement-dql-301
 
-dynatrace query language advanced concepts hands on training
+dynatrace query language advanced concepts hands-on training
 
-### Prerequisites
+## Lab Overview
 
-* Github Account
-* git installed locally
-* Dynatrace Playground access [Playground](https://wkf10640.apps.dynatrace.com/ui/apps/dynatrace.launcher/launchpad/99583c94-6c7c-4a5d-9c23-1432e4e1746c)
+During this hands-on training, we will use the Dynatrace playground with Notebooks and Dashboards to explore the following:
 
-### Launching Lab Guide Locally
+1. **DQL 301 - Data Transformation**: Learn how to effectively use the `join`, `lookup`, `append`, and `data` commands to combine data from multiple sources, enhancing the depth and breadth of your queries.
 
-Clone the repo:
-```sh
-git clone https://github.com/dynatrace-wwse/enablement-dql-301.git
-```
+*Future sessions*
 
-Install Node if not already installed:
-[Download Node.js](https://nodejs.org/en/download/package-manager)
+1.	**Data Optimization**: Optimize your DQL queries with sampling, entity usage, and timeseries data, enabling better performance monitoring and analysis.
+2.	**Aggregate Complex Queries**: Explore techniques for aggregating complex queries using workflows and business events, allowing for more comprehensive data analysis and reporting.
 
-Move to the lab-guide directory:
-```sh
-cd lab-guide
-```
+By the end of this session, students will have a deeper understanding of advanced DQL features, empowering them to leverage Dynatrace for more sophisticated and efficient data analysis.
 
-Run the generator command:
-```sh
-node bin/generator.js
-```
+**Lab tasks:**
 
-Run the server command:
-```sh
-node bin/server.js
-```
+1. Import Notebook into Dynatrace Playground
 
-Open the URL in your browser:
-```text
-http://localhost:3000
-```
+2. Including Raw Data with `data`
+
+3. Appending Additional Data with `append`
+
+4. Connecting Data With `lookup`
+
+5. Exploring the Entity Model and Semantic Dictionary with `describe`
+
+6. Flexible Data Connectivity With `join`
+
+Ready to learn the advanced concepts of Dynatrace DQL?
+
+## [View the Lab Guide](https://dynatrace-wwse.github.io/enablement-dql-301)

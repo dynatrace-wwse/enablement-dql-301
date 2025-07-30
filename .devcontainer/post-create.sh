@@ -7,13 +7,6 @@ bindFunctionsInShell
 
 setupAliases
 
-createKindCluster
-
-installK9s
-
-#TODO: BeforeGoLive: uncomment this. This is only needed for professors to have the Mkdocs live in the container
-installMkdocs
-
 # e2e testing
 # If the codespace is created (eg. via a Dynatrace workflow)
 # and hardcoded to have a name starting with dttest-

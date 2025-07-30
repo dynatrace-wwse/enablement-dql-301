@@ -1,8 +1,8 @@
-<!--TODO: Update Lab Task -->
-<!--TODO: Update bizevent code snippet -->
+# Data Transformation
+
 --8<-- "snippets/send-bizevent/3-data-transformation.js"
 
-In this lab, we will explore how to transform data from various sources using `join`, `lookup`, `append`, and `data` commands. We will look at data from logs, traces, the entity model, and raw sources to accomplish this.
+In this lab module, we will explore how to transform data from various sources using `join`, `lookup`, `append`, and `data` commands. We will look at data from logs, traces, the entity model, and raw sources to accomplish this.
 
 **Lab Tasks:**
   1. Adding Data with `data` and `append`
@@ -105,10 +105,10 @@ fetch spans, from:now()-1h, to:now()
 In the screenshots below, you can clearly see the difference in performance with `data` and without it.
 
 With `data`:
-![With data Record Performance](./img//with_data_record_performance.png)
+![With data Record Performance](./img/with_data_record_performance.png)
 
 Without `data`:
-![No data Record Performance](./img//no_data_record_performance.png)
+![No data Record Performance](./img/no_data_record_performance.png)
 
 The ability to add data on demand - particularly for non-DQL data sources and for quasi-static, long-running DQL queries - is a powerful way to add data into your DQL statements.
 
@@ -195,7 +195,7 @@ In the case of that `fieldsKeep` pattern, only the `name` nested JSON keys and t
 ### Adding Data Sets With `append`
 The `append` command ([Documentation]()) is one of three ways to add data to an existing DQL data set. This command behaves similarly to a **SQL UNION ALL** operation between two data sets `A` (i.e., "left") and `B` (i.e., "right"). A diagram showing that is below, highlighting the fact that the two sets have no excluded intersection and that the two sets may have duplicate values. However, the keys will still remain unique.
 
-![append Set Logic](./img//append_set_diagram.png)
+![append Set Logic](./img/append_set_diagram.png)
 
 Example syntax for a DQL `fetch`:
 ```
@@ -223,7 +223,7 @@ timeseries cpuIdle=avg(dt.host.cpu.idle), by: { host.name }, filter: { matchesVa
   | fieldsAdd cpuIdleAvg7dShift = arrayAvg(cpuIdle7dShift)
 ]
 ```
-![append for host idle CPU](./img//host_idle_cpu_append.png)
+![append for host idle CPU](./img/host_idle_cpu_append.png)
 
 **⏩ Try it out**: Let's say you're investigating a JVM memory leak on host `i-0d8d16e6f7c82fd48`. To do so, we would like to get the heap details for that host combined with the server's logs. Using `append`, stitch together the heap metric (hint: `dt.runtime.jvm.memory_pool.used`) with the `WARN` and `ERROR` logs for that host. Make a timeseries for the log count (hint: `| makeTimeseries count=count()`), and plot both timeseries on the same time selection (e.g., **Last 2 hours**).  
 
@@ -235,7 +235,7 @@ The `lookup` command ([documentation](https://docs.dynatrace.com/docs/discover-d
 
 This mimics a SQL INNER JOIN, but it is not quite the same as an INNER JOIN, as `lookup` only returns the first matching result between `A` ("left") and `B` ("right"). Additional matches are disregarded.
 
-![lookup Set Logic](./img//lookup_set_diagram.png)
+![lookup Set Logic](./img/lookup_set_diagram.png)
 
 Other points to note about `lookup`:
 * Null Values: If the key values are null for `sourceField` and `lookupField`, then those records are not returned, as well. 
@@ -274,7 +274,7 @@ record(a=6)
 ], sourceField: a, lookupField: a, prefix:"lookup."
 ```
 
-![A & B Tables, lookup](./img//left_and_right_tables_lookup.png)
+![A & B Tables, lookup](./img/left_and_right_tables_lookup.png)
 
 **⏩ Try it out**: Following the DQL snippet below, `lookup` the names of the services running on a given process group. Note that you will need to add in the second `lookup`.  
 
@@ -318,8 +318,8 @@ As a way to "automate" the field addition for given `fetch`, let's use that `des
 (propagate `A2` to `A3`, `A4`, etc.)
 
 The result should look something like the screenshot below.
-![describe Output in Excel](./img//describe_excel.png)
-![describe Fields Added in DQL](./img//describe_output.png)
+![describe Output in Excel](./img/describe_excel.png)
+![describe Fields Added in DQL](./img/describe_output.png)
 
 For convenience, a summary of common topologies for the application, service, process, and host entities is given in the table below. The table will often get you a majority of the relationships that you would care about for these entities.
 
@@ -351,7 +351,7 @@ timeseries avg(dt.host.cpu.system), by: { host.name, dt.entity.host }, filter: {
 ```
 
 Output:
-![AWS Availability Zone](./img//lookup_aws_az.png)
+![AWS Availability Zone](./img/lookup_aws_az.png)
 
 ### Topology Traversal and Intent Passing With `entityAttr`
 
@@ -387,13 +387,13 @@ The `join` command ([documentation](https://docs.dynatrace.com/docs/discover-dyn
 | Outer Join | `kind: outer` | Returns all matching and non-matching records from the left table (`A`) and the right table (`B`). | SQL OUTER JOIN
 
 **Inner Join**
-![Inner Join](./img//inner_join_set_diagram.png)
+![Inner Join](./img/inner_join_set_diagram.png)
 
 **Left Outer Join**
 ![Left Outer Join](./img/left_outer_join_set_diagram.png)
 
 **Outer Join**
-![Outer Join](./img//outer_join_set_diagram.png)
+![Outer Join](./img/outer_join_set_diagram.png)
 
 Let's walk through an example query for an inner `join` for service IDs from log records:
 ```
@@ -429,7 +429,7 @@ fetch logs
 
 Run this with both `leftOuter` and `inner` joins. You will notice that `leftOuter` returns records with null fields while `inner` does not. 
 
-![leftouter and inner](./img//leftouter_and_inner_same_query.png)
+![leftouter and inner](./img/leftouter_and_inner_same_query.png)
 
 **⏩ Try it out**: Starting with the snippet below, modify it so that you can determine the single value percentage of EC2 instances in the environment. Hint: on your `summarize`, you will need to use a `countIf`. What happens when you change the `kind:` value for `join`?
 
