@@ -6,8 +6,4 @@
 #Load the functions into the shell
 source /workspaces/$RepositoryName/.devcontainer/util/functions.sh
 
-#TODO: BeforeGoLive comment this so the Mkdocs are not exposed in the container.
-# we want to monitor all interactions of the users in the live github pages.
-exposeMkdocs
-
 printInfoSection "Your dev.container finished creating"
