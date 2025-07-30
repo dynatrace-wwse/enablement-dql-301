@@ -1,5 +1,5 @@
-<!--TODO: Update Lab Task -->
-<!--TODO: Update bizevent code snippet -->
+# Wrap Up
+
 --8<-- "snippets/send-bizevent/4-wrap-up.js"
 
 ### What You Learned Today 
