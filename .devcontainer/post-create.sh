@@ -1,39 +1,39 @@
 #!/bin/bash
 #loading functions to script
-source /workspaces/$RepositoryName/.devcontainer/util/functions.sh
 export SECONDS=0
+source .devcontainer/util/source_framework.sh
 
-bindFunctionsInShell
+setUpTerminal
 
-setupAliases
+startKindCluster
 
-# e2e testing
-# If the codespace is created (eg. via a Dynatrace workflow)
-# and hardcoded to have a name starting with dttest-
-# Then run the e2e test harness
-# Otherwise, send the startup ping
-if [[ "$CODESPACE_NAME" == dttest-* ]]; then
-    # Set default repository for gh CLI
-    gh repo set-default "$GITHUB_REPOSITORY"
+installK9s
 
-    # Set up a label, used if / when the e2e test fails
-    # This may already be set, so catch error and always return true
-    gh label create "e2e test failed" --force || true
+#TODO: BeforeGoLive: uncomment this. This is only needed for professors to have the Mkdocs live in the container
+#installMkdocs
 
-    # Install required Python packages
-    pip install -r "/workspaces/$REPOSITORY_NAME/.devcontainer/testing/requirements.txt" --break-system-packages
+# Dynatrace Operator can be deployed automatically
+dynatraceDeployOperator
 
-    # Run the test harness script
-    python "/workspaces/$REPOSITORY_NAME/.devcontainer/testing/testharness.py"
+# You can deploy CNFS or AppOnly
+deployCloudNative
+#deployApplicationMonitoring
 
-    # Testing finished. Destroy the codespace
-    gh codespace delete --codespace "$CODESPACE_NAME" --force
-else
+# In here you deploy the Application you want
+# The TODO App will be deployed as a sample
+deployTodoApp
 
-    verifyCodespaceCreation
-    
-    postCodespaceTracker
-  
-    printInfo "Finished creating devcontainer"
+# The Astroshop keeping changes of demo.live needs certmanager
+#certmanagerInstall
+#certmanagerEnable
+#deployAstroshop
 
-fi
+# If you want to deploy your own App, just create a function in the functions.sh file and call it here.
+# deployMyCustomApp
+
+# If the Codespace was created via Workflow end2end test will be done, otherwise
+# it'll verify if there are error in the logs and will show them in the greeting as well a monitoring 
+# notification will be sent on the instantiation details
+finalizePostCreation
+
+printInfoSection "Your dev container finished creating"
