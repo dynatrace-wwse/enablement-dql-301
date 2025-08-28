@@ -944,15 +944,19 @@ _exposeAstroshop(){
 
 
 installMkdocs(){
+  printInfoSection "Installing Mkdocs"
+  printInfo "Installing Runme v $RUNME_CLI_VERSION"
   installRunme
-  printInfo "Installing Mkdocs"
+  printInfo "Installing MKdocs"
   pip install --break-system-packages -r docs/requirements/requirements-mkdocs.txt
+  printInfo "Exposing MKdocs 0.0.0.0:8000"
+  exposeMkdocs
 }
 
 
 exposeMkdocs(){
   printInfo "Exposing Mkdocs in your dev.container"
-  nohup mkdocs serve -a localhost:8000 > /dev/null 2>&1 &
+  nohup mkdocs serve -a 0.0.0.0:8000 > /dev/null 2>&1 &
 }
 
 
