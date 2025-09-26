@@ -1,4 +1,7 @@
 --8<-- "snippets/send-bizevent/index.js"
+
+--8<-- "snippets/dt-enablement.md"
+
 # Enablement DQL 301
 --8<-- "snippets/disclaimer.md"
 
