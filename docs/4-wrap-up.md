@@ -42,3 +42,5 @@ Types of Joins:
 * Outer Join (kind: outer): Returns all matching and non-matching records from both tables.
 
 By mastering these concepts, you can effectively connect and analyze data in Dynatrace, enhancing your observability and monitoring capabilities. Keep practicing with the provided exercises to solidify your understanding! 🚀
+
+--8<-- "snippets/feedback.md"
