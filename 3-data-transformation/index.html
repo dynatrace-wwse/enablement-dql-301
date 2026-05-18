@@ -171,6 +171,11 @@
       </label>
       <nav class="md-search__options" aria-label="Search">
         
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
@@ -657,18 +662,18 @@ document.addEventListener('DOMContentLoaded', function() {
 <h3 id="including-raw-data-with-data">Including Raw Data with <code>data</code><a class="headerlink" href="#including-raw-data-with-data" title="Permanent link">#</a></h3>
 <p>The <code>data</code> command provides an easy way to add any data you care about into a Notebook, Dashboard, Workflow, or any other component that uses DQL. This is most useful when pulling in data from other sources (i.e., Excel, CSV, etc.) or consolidating data from another query into a DQL statement. </p>
 <p>Syntax:
-<div class="highlight"><pre><span></span><code>data record(key=value1),
-record(key=value2,key2=value3), ...
-</code></pre></div></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>data record(key=value1),
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>record(key=value2,key2=value3), ...
+</span></code></pre></div></p>
 <p>For example, let's say your customer has a product name on all their key applications, placed as tag metadata on those entities in Dynatrace. This value, <code>DT_RELEASE_PRODUCT</code>, does not change often; the customer only adds new apps every 6 months. Therefore, if we use a query to return those <code>DT_RELEASE_PRODUCT</code> values, we can then build them as a new <code>data</code> array for subsequent queries without having to have to run a DQL <code>fetch</code>.</p>
 <p>Extract the tags as a string for all of the process group instances (PGIs) in the environment, and parse out the <code>DT_RELEASE_PRODUCT</code> values.
-<div class="highlight"><pre><span></span><code>fetch dt.entity.process_group_instance
-| fieldsAdd tags
-| fieldsAdd tagsToString = toString(tags)
-| parse tagsToString, &quot;&quot;&quot;DATA &#39;DT_RELEASE_PRODUCT:&#39; LD:productName &#39;\&quot;,&#39; DATA EOF&quot;&quot;&quot;
-| filter isNotNull(productName)
-| summarize count=count(), by:{productName}
-</code></pre></div></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>fetch dt.entity.process_group_instance
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>| fieldsAdd tags
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>| fieldsAdd tagsToString = toString(tags)
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>| parse tagsToString, &quot;&quot;&quot;DATA &#39;DT_RELEASE_PRODUCT:&#39; LD:productName &#39;\&quot;,&#39; DATA EOF&quot;&quot;&quot;
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>| filter isNotNull(productName)
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>| summarize count=count(), by:{productName}
+</span></code></pre></div></p>
 <p>Your customer then tells you that they have different business units and business criticality values based on what application / product is in use. Those business units and criticality values are outlined in the table below.</p>
 <table>
 <thead>
@@ -697,54 +702,54 @@ record(key=value2,key2=value3), ...
 </tbody>
 </table>
 <p>Let's build out the <code>data</code> array to include <code>productName</code>, <code>businessUnit</code>, and <code>criticality</code> record values accordingly:
-<div class="highlight"><pre><span></span><code>data record(productName=&quot;easytrade&quot;,businessUnit=&quot;Financial Services&quot;,criticality=&quot;HI&quot;),
-record(productName=&quot;easytravel&quot;,businessUnit=&quot;Retail&quot;,criticality=&quot;HI&quot;),
-record(productName=&quot;hipstershop&quot;,businessUnit=&quot;Retail&quot;,criticality=&quot;LO&quot;)
-</code></pre></div></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>data record(productName=&quot;easytrade&quot;,businessUnit=&quot;Financial Services&quot;,criticality=&quot;HI&quot;),
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>record(productName=&quot;easytravel&quot;,businessUnit=&quot;Retail&quot;,criticality=&quot;HI&quot;),
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>record(productName=&quot;hipstershop&quot;,businessUnit=&quot;Retail&quot;,criticality=&quot;LO&quot;)
+</span></code></pre></div></p>
 <p>You can now associate these new fields for <code>businessUnit</code> and <code>criticality</code> to any other entity that has the <code>productName</code> tag attached to it. </p>
 <p>To improve query performance, you can run a query once to get the fields you care about and then reuse that static or quasi-static field in other queries. Say you want to understand your application requests from the perspective of what OS version their underlying compute is running (Amazon Linux, Ubuntu Bionic Beaver, etc.). You want to know this because you are trying to plan for patching cycles and how you will maintain those systems for different, high-throughput apps. You know that these OS versions are LTS, and therefore constant. </p>
 <p>Let's look at the query which would gather those OS versions:</p>
-<div class="highlight"><pre><span></span><code>fetch spans, from:now()-1h, to:now() 
-| fieldsAdd dt.entity.service
-| fieldsAdd dt.entity.service.id = entityAttr(dt.entity.service,&quot;id&quot;)
-| fieldsAdd dt.entity.service.entity.name = entityName(dt.entity.service)
-| fieldsAdd pgiRunsOn = entityAttr(dt.entity.service,&quot;runs_on&quot;)
-| fieldsAdd pgiIds = pgiRunsOn[dt.entity.process_group_instance]
-| expand pgiId = pgiIds
-| join
-[
-  fetch dt.entity.process_group_instance
-  | fieldsAdd id, entity.name
-  | fieldsAdd hostId = belongs_to[dt.entity.host]
-], on:{left[pgiId]==right[id]}, kind:{inner}, prefix:&quot;pgi.&quot;
-| join
-[
-  fetch dt.entity.host
-  | fieldsAdd id, entity.name
-  | fieldsAdd osVersion
-], on:{left[pgi.hostId]==right[id]}, kind:{inner}, prefix:&quot;host.&quot;
-| fields dt.entity.service.entity.name, dt.entity.service.id, host.entity.name, host.osVersion
-| filter contains(host.osVersion, &quot;Ubuntu&quot;)
-| summarize count=countDistinct(host.osVersion), by:{host.osVersion,dt.entity.service.id}
-| fieldsAdd dataRecord = concat(&quot;record(dt.entity.service.id=\&quot;&quot;,dt.entity.service.id,&quot;\&quot;,hostOs=\&quot;&quot;,host.osVersion,&quot;\&quot;),&quot;)
-| limit 10
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>fetch spans, from:now()-1h, to:now() 
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>| fieldsAdd dt.entity.service
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>| fieldsAdd dt.entity.service.id = entityAttr(dt.entity.service,&quot;id&quot;)
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>| fieldsAdd dt.entity.service.entity.name = entityName(dt.entity.service)
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>| fieldsAdd pgiRunsOn = entityAttr(dt.entity.service,&quot;runs_on&quot;)
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>| fieldsAdd pgiIds = pgiRunsOn[dt.entity.process_group_instance]
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>| expand pgiId = pgiIds
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>| join
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>[
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>  fetch dt.entity.process_group_instance
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>  | fieldsAdd id, entity.name
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>  | fieldsAdd hostId = belongs_to[dt.entity.host]
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>], on:{left[pgiId]==right[id]}, kind:{inner}, prefix:&quot;pgi.&quot;
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>| join
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>[
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>  fetch dt.entity.host
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>  | fieldsAdd id, entity.name
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>  | fieldsAdd osVersion
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>], on:{left[pgi.hostId]==right[id]}, kind:{inner}, prefix:&quot;host.&quot;
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>| fields dt.entity.service.entity.name, dt.entity.service.id, host.entity.name, host.osVersion
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>| filter contains(host.osVersion, &quot;Ubuntu&quot;)
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>| summarize count=countDistinct(host.osVersion), by:{host.osVersion,dt.entity.service.id}
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>| fieldsAdd dataRecord = concat(&quot;record(dt.entity.service.id=\&quot;&quot;,dt.entity.service.id,&quot;\&quot;,hostOs=\&quot;&quot;,host.osVersion,&quot;\&quot;),&quot;)
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>| limit 10
+</span></code></pre></div>
 <p><strong>⏩ Try it out</strong>: Now, see if you can take the column <code>dataRecord</code> and copy it into another query after the <code>// ADD QUERY HERE</code> line. Run that query and the subsequent one without the <code>data</code> record. Note the differences in performance.  </p>
 <p>Snippet:
-<div class="highlight"><pre><span></span><code>fetch spans, from:now()-1h, to:now() 
-| fieldsAdd dt.entity.service
-| fieldsAdd dt.entity.service.id = entityAttr(dt.entity.service,&quot;id&quot;)
-| fieldsAdd dt.entity.service.entity.name = entityName(dt.entity.service)
-| join
-[ 
-// ADD QUERY HERE
-
-], on:{dt.entity.service.id}, kind:{inner}, prefix:&quot;host.&quot;
-| fieldsRemove host.dt.entity.service.id
-| fields trace.id, span.id, dt.entity.service.entity.name, span.name, host.hostOs, duration
-| summarize count=count(), by:{dt.entity.service.entity.name, host.hostOs}
-| sort count desc
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>fetch spans, from:now()-1h, to:now() 
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>| fieldsAdd dt.entity.service
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>| fieldsAdd dt.entity.service.id = entityAttr(dt.entity.service,&quot;id&quot;)
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>| fieldsAdd dt.entity.service.entity.name = entityName(dt.entity.service)
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>| join
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>[ 
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>// ADD QUERY HERE
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>], on:{dt.entity.service.id}, kind:{inner}, prefix:&quot;host.&quot;
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>| fieldsRemove host.dt.entity.service.id
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>| fields trace.id, span.id, dt.entity.service.entity.name, span.name, host.hostOs, duration
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>| summarize count=count(), by:{dt.entity.service.entity.name, host.hostOs}
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>| sort count desc
+</span></code></pre></div>
 In the screenshots below, you can clearly see the difference in performance with <code>data</code> and without it.</p>
 <p>With <code>data</code>:
 <img alt="With data Record Performance" src="../img/with_data_record_performance.png" /></p>
@@ -754,70 +759,70 @@ In the screenshots below, you can clearly see the difference in performance with
 <h3 id="raw-json-data-types-with-data">Raw JSON Data Types with <code>data</code><a class="headerlink" href="#raw-json-data-types-with-data" title="Permanent link">#</a></h3>
 <p>The <code>data</code> <a href="https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-query-language/commands/data-source-commands#data">command</a> allows you to also pull in raw JSON content. </p>
 <p>The following is an example for nested JSON:
-<div class="highlight"><pre><span></span><code>data json:&quot;&quot;&quot;[
-  {
-    &quot;dataRecord&quot;: {
-      &quot;name&quot;: &quot;jwoo1&quot;,
-      &quot;depositAmount&quot;: 112,
-      &quot;bankAccountId&quot;: 1234,
-      &quot;properties&quot;:
-      {
-        &quot;type&quot;: &quot;savings&quot;,
-        &quot;interestRate&quot;: 0.0045,
-        &quot;relatedAccounts&quot;:
-        {
-          &quot;savings&quot;: &quot;N/A&quot;,
-          &quot;checking&quot;: &quot;2341&quot;,
-          &quot;mmf&quot;: &quot;1493&quot;
-        }
-      }
-    }
-  },
-  {
-    &quot;dataRecord&quot;: {
-      &quot;name&quot;: &quot;jdoe2&quot;,
-      &quot;depositAmount&quot;: 343,
-      &quot;bankAccountId&quot;: 1120,
-      &quot;properties&quot;:
-      {
-        &quot;type&quot;: &quot;checking&quot;,
-        &quot;interestRate&quot;: 0.00325,
-        &quot;relatedAccounts&quot;:
-        {
-          &quot;savings&quot;: &quot;3001&quot;,
-          &quot;checking&quot;: &quot;N/A&quot;,
-          &quot;mmf&quot;: &quot;8843&quot;
-        }
-      }
-    }
-  },
-  {
-    &quot;dataRecord&quot;: {
-      &quot;name&quot;: &quot;jdoe3&quot;,
-      &quot;depositAmount&quot;: 8433,
-      &quot;bankAccountId&quot;: 1555
-    }
-  },
-  {
-    &quot;dataRecord&quot;: {
-      &quot;name&quot;: &quot;batman4&quot;,
-      &quot;depositAmount&quot;: 8433413,
-      &quot;bankAccountId&quot;: 1000,
-      &quot;properties&quot;:
-      {
-        &quot;type&quot;: &quot;savings&quot;,
-        &quot;interestRate&quot;: 0.0055,
-        &quot;relatedAccounts&quot;:
-        {
-          &quot;savings&quot;: &quot;N/A&quot;,
-          &quot;checking&quot;: &quot;3499&quot;,
-          &quot;mmf&quot;: &quot;2224&quot;
-        }
-      }
-    }
-  }
-]&quot;&quot;&quot;
-</code></pre></div></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>data json:&quot;&quot;&quot;[
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  {
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    &quot;dataRecord&quot;: {
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>      &quot;name&quot;: &quot;jwoo1&quot;,
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>      &quot;depositAmount&quot;: 112,
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>      &quot;bankAccountId&quot;: 1234,
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>      &quot;properties&quot;:
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>      {
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>        &quot;type&quot;: &quot;savings&quot;,
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>        &quot;interestRate&quot;: 0.0045,
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        &quot;relatedAccounts&quot;:
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>        {
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>          &quot;savings&quot;: &quot;N/A&quot;,
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>          &quot;checking&quot;: &quot;2341&quot;,
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>          &quot;mmf&quot;: &quot;1493&quot;
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>        }
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>      }
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>    }
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>  },
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>  {
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>    &quot;dataRecord&quot;: {
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>      &quot;name&quot;: &quot;jdoe2&quot;,
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>      &quot;depositAmount&quot;: 343,
+</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>      &quot;bankAccountId&quot;: 1120,
+</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>      &quot;properties&quot;:
+</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>      {
+</span><span id="__span-5-27"><a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>        &quot;type&quot;: &quot;checking&quot;,
+</span><span id="__span-5-28"><a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a>        &quot;interestRate&quot;: 0.00325,
+</span><span id="__span-5-29"><a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>        &quot;relatedAccounts&quot;:
+</span><span id="__span-5-30"><a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>        {
+</span><span id="__span-5-31"><a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a>          &quot;savings&quot;: &quot;3001&quot;,
+</span><span id="__span-5-32"><a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a>          &quot;checking&quot;: &quot;N/A&quot;,
+</span><span id="__span-5-33"><a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a>          &quot;mmf&quot;: &quot;8843&quot;
+</span><span id="__span-5-34"><a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a>        }
+</span><span id="__span-5-35"><a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a>      }
+</span><span id="__span-5-36"><a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a>    }
+</span><span id="__span-5-37"><a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a>  },
+</span><span id="__span-5-38"><a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a>  {
+</span><span id="__span-5-39"><a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a>    &quot;dataRecord&quot;: {
+</span><span id="__span-5-40"><a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a>      &quot;name&quot;: &quot;jdoe3&quot;,
+</span><span id="__span-5-41"><a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a>      &quot;depositAmount&quot;: 8433,
+</span><span id="__span-5-42"><a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a>      &quot;bankAccountId&quot;: 1555
+</span><span id="__span-5-43"><a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a>    }
+</span><span id="__span-5-44"><a id="__codelineno-5-44" name="__codelineno-5-44" href="#__codelineno-5-44"></a>  },
+</span><span id="__span-5-45"><a id="__codelineno-5-45" name="__codelineno-5-45" href="#__codelineno-5-45"></a>  {
+</span><span id="__span-5-46"><a id="__codelineno-5-46" name="__codelineno-5-46" href="#__codelineno-5-46"></a>    &quot;dataRecord&quot;: {
+</span><span id="__span-5-47"><a id="__codelineno-5-47" name="__codelineno-5-47" href="#__codelineno-5-47"></a>      &quot;name&quot;: &quot;batman4&quot;,
+</span><span id="__span-5-48"><a id="__codelineno-5-48" name="__codelineno-5-48" href="#__codelineno-5-48"></a>      &quot;depositAmount&quot;: 8433413,
+</span><span id="__span-5-49"><a id="__codelineno-5-49" name="__codelineno-5-49" href="#__codelineno-5-49"></a>      &quot;bankAccountId&quot;: 1000,
+</span><span id="__span-5-50"><a id="__codelineno-5-50" name="__codelineno-5-50" href="#__codelineno-5-50"></a>      &quot;properties&quot;:
+</span><span id="__span-5-51"><a id="__codelineno-5-51" name="__codelineno-5-51" href="#__codelineno-5-51"></a>      {
+</span><span id="__span-5-52"><a id="__codelineno-5-52" name="__codelineno-5-52" href="#__codelineno-5-52"></a>        &quot;type&quot;: &quot;savings&quot;,
+</span><span id="__span-5-53"><a id="__codelineno-5-53" name="__codelineno-5-53" href="#__codelineno-5-53"></a>        &quot;interestRate&quot;: 0.0055,
+</span><span id="__span-5-54"><a id="__codelineno-5-54" name="__codelineno-5-54" href="#__codelineno-5-54"></a>        &quot;relatedAccounts&quot;:
+</span><span id="__span-5-55"><a id="__codelineno-5-55" name="__codelineno-5-55" href="#__codelineno-5-55"></a>        {
+</span><span id="__span-5-56"><a id="__codelineno-5-56" name="__codelineno-5-56" href="#__codelineno-5-56"></a>          &quot;savings&quot;: &quot;N/A&quot;,
+</span><span id="__span-5-57"><a id="__codelineno-5-57" name="__codelineno-5-57" href="#__codelineno-5-57"></a>          &quot;checking&quot;: &quot;3499&quot;,
+</span><span id="__span-5-58"><a id="__codelineno-5-58" name="__codelineno-5-58" href="#__codelineno-5-58"></a>          &quot;mmf&quot;: &quot;2224&quot;
+</span><span id="__span-5-59"><a id="__codelineno-5-59" name="__codelineno-5-59" href="#__codelineno-5-59"></a>        }
+</span><span id="__span-5-60"><a id="__codelineno-5-60" name="__codelineno-5-60" href="#__codelineno-5-60"></a>      }
+</span><span id="__span-5-61"><a id="__codelineno-5-61" name="__codelineno-5-61" href="#__codelineno-5-61"></a>    }
+</span><span id="__span-5-62"><a id="__codelineno-5-62" name="__codelineno-5-62" href="#__codelineno-5-62"></a>  }
+</span><span id="__span-5-63"><a id="__codelineno-5-63" name="__codelineno-5-63" href="#__codelineno-5-63"></a>]&quot;&quot;&quot;
+</span></code></pre></div></p>
 <p><strong>⏩ Try it out</strong>: For that example, copy the <code>data</code> record into your Notebook and determine the median deposit amount (<code>depositAmount</code>) from the data. </p>
 <p>Nested JSON like the example in the <code>data</code> record can be more easily parsed if flatted accordingly. This can be accomplished by using <code>fieldsFlatten</code>: <a href="https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-query-language/commands/structuring-commands#fieldsFlatten">Documentation</a>. For JSON fields, you can provide a <code>depth</code> argument that then automatically extracts nested JSON fields and places those keys as their own variables in the record.</p>
 <p>For nested, lengthy JSON records, the <code>fieldsKeep</code> command proves useful: <a href="https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-query-language/commands/selection-and-modification-commands#fieldsKeep">Documentation</a>. The <code>fieldsKeep</code> command retains only the records that match either an exact key or a key with wildcards. An example wildcard pattern for the above would be: <code>fieldsKeep "dataRecord.name*"</code></p>
@@ -827,26 +832,26 @@ In the screenshots below, you can clearly see the difference in performance with
 <p>The <code>append</code> command (<a href="">Documentation</a>) is one of three ways to add data to an existing DQL data set. This command behaves similarly to a <strong>SQL UNION ALL</strong> operation between two data sets <code>A</code> (i.e., "left") and <code>B</code> (i.e., "right"). A diagram showing that is below, highlighting the fact that the two sets have no excluded intersection and that the two sets may have duplicate values. However, the keys will still remain unique.</p>
 <p><img alt="append Set Logic" src="../img/append_set_diagram.png" /></p>
 <p>Example syntax for a DQL <code>fetch</code>:
-<div class="highlight"><pre><span></span><code>fetch logs
-| fieldsAdd keyValue=&quot;test&quot;
-| limit 10
-| append
-[
-   data record(keyValue=&quot;test2&quot;, content=&quot;Hello World&quot;)
-]
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>fetch logs
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>| fieldsAdd keyValue=&quot;test&quot;
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>| limit 10
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>| append
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>[
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>   data record(keyValue=&quot;test2&quot;, content=&quot;Hello World&quot;)
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>]
+</span></code></pre></div>
 In that example case, log records will have an additional key added to the records, <code>keyValue</code>, and its value will be fixed as <code>test</code>. With the <code>append</code> command, the <code>keyValue</code> key will have the value <code>test2</code> added as a record. Further, the <code>content</code> key from the previous log DQL statement will have the value <code>Hello World</code>. Therefore, the total record count from the query will be 11, 10 from the logs and 1 from the <code>append</code>, with the keys <code>keyValue</code> and <code>content</code> having non-null entries on all records. </p>
 <p>A potentially useful scenario for <code>append</code> is when you have multiple metric queries that you want to "glue" together, regardless of whether you have a common value between <code>A</code> ("left") and <code>B</code> ("right"). For instance, if you wanted to show the timeseries for host idle CPU over the last 2 hours and in the same window 7 days ago, you could accomplish that with <code>append</code>, as seen below. </p>
 <p>Another useful scenario is to combine metrics and logs on the same entity, namely, a host or a PGI.</p>
 <p>Example:
-<div class="highlight"><pre><span></span><code>timeseries cpuIdle=avg(dt.host.cpu.idle), by: { host.name }, filter: { matchesValue(host.name, &quot;ip-172-31-23-111.ec2.internal&quot;) }
-| fieldsAdd cpuIdleAvg = arrayAvg(cpuIdle)
-| append
-[
-  timeseries cpuIdle7dShift = avg(dt.host.cpu.idle), by: { host.name }, filter: { matchesValue(host.name, &quot;ip-172-31-23-111.ec2.internal&quot;) }, shift: -168h
-  | fieldsAdd cpuIdleAvg7dShift = arrayAvg(cpuIdle7dShift)
-]
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>timeseries cpuIdle=avg(dt.host.cpu.idle), by: { host.name }, filter: { matchesValue(host.name, &quot;ip-172-31-23-111.ec2.internal&quot;) }
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>| fieldsAdd cpuIdleAvg = arrayAvg(cpuIdle)
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>| append
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>[
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>  timeseries cpuIdle7dShift = avg(dt.host.cpu.idle), by: { host.name }, filter: { matchesValue(host.name, &quot;ip-172-31-23-111.ec2.internal&quot;) }, shift: -168h
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>  | fieldsAdd cpuIdleAvg7dShift = arrayAvg(cpuIdle7dShift)
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>]
+</span></code></pre></div>
 <img alt="append for host idle CPU" src="../img/host_idle_cpu_append.png" /></p>
 <p><strong>⏩ Try it out</strong>: Let's say you're investigating a JVM memory leak on host <code>i-0d8d16e6f7c82fd48</code>. To do so, we would like to get the heap details for that host combined with the server's logs. Using <code>append</code>, stitch together the heap metric (hint: <code>dt.runtime.jvm.memory_pool.used</code>) with the <code>WARN</code> and <code>ERROR</code> logs for that host. Make a timeseries for the log count (hint: <code>| makeTimeseries count=count()</code>), and plot both timeseries on the same time selection (e.g., <strong>Last 2 hours</strong>).  </p>
 <h2 id="connecting-data-with-join-and-lookup">Connecting Data With <code>join</code> and <code>lookup</code><a class="headerlink" href="#connecting-data-with-join-and-lookup" title="Permanent link">#</a></h2>
@@ -859,58 +864,58 @@ In that example case, log records will have an additional key added to the recor
 * Nesting: <code>lookup</code> function nests all included fields as a record.
 * Execution Order: By default, this is set to <code>auto</code>, which corresponds to the left (<code>A</code>) table being the source and the right (<code>B</code>) table being the lookup table. This can be changed to <code>leftFirst</code> or <code>rightFirst</code>, depending on what you are trying to do.</p>
 <p>Example query for <code>lookup</code> for service IDs from log records:
-<div class="highlight"><pre><span></span><code>fetch logs
-| lookup 
-[
-  fetch dt.entity.service
-  | fieldsAdd id
-  | fieldsAdd entity.name
-], sourceField: dt.source_entity, lookupField:id, prefix:&quot;service.&quot;
-| filter isNotNull(service.entity.name)
-</code></pre></div></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>fetch logs
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>| lookup 
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>[
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>  fetch dt.entity.service
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>  | fieldsAdd id
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>  | fieldsAdd entity.name
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>], sourceField: dt.source_entity, lookupField:id, prefix:&quot;service.&quot;
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>| filter isNotNull(service.entity.name)
+</span></code></pre></div></p>
 <p>In the example, the log records have source entities that can be services (i.e., <code>dt.entity.service</code>). We want to match source entities that are services against the right (<code>B</code>) table in the Dynatrace entity model that has additional service details, like name, PGI the service runs on, and so on. </p>
 <p>To do that, we fetch records from <code>dt.entity.service</code> and match the source entity ID (<code>dt.source_entity</code>) with the entity ID from <code>dt.entity.service</code>. While <code>entity.name</code> and <code>id</code> are fields that are added by default with a <code>fetch</code> for entities in the entity model, it is good practice to add them as separate fields regardless, making the mapping of <code>sourceField</code> to <code>lookupField</code> more intuitive. Finally, the <code>prefix:</code> field allows you to place text in front of all keys in the result of the <code>lookup</code>. </p>
 <p><code>prefix:</code> will also manifest again when we discuss <code>join</code>.</p>
 <p>Please note that <code>lookup</code> only returns the <em>first</em> match for the left (<code>A</code>) and right (<code>B</code>) tables. That is apparent from this example DQL snippet and the screenshot below:</p>
-<div class="highlight"><pre><span></span><code>data record(a=2),
-record(a=4),
-record(a=6)
-| lookup 
-[
-  data record(a=2),
-  record(a=2),
-  record(a=3)
-], sourceField: a, lookupField: a, prefix:&quot;lookup.&quot;
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>data record(a=2),
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>record(a=4),
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>record(a=6)
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>| lookup 
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>[
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>  data record(a=2),
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>  record(a=2),
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>  record(a=3)
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>], sourceField: a, lookupField: a, prefix:&quot;lookup.&quot;
+</span></code></pre></div>
 <p><img alt="A &amp; B Tables, lookup" src="../img/left_and_right_tables_lookup.png" /></p>
 <p><strong>⏩ Try it out</strong>: Following the DQL snippet below, <code>lookup</code> the names of the services running on a given process group. Note that you will need to add in the second <code>lookup</code>.  </p>
-<p><div class="highlight"><pre><span></span><code>fetch logs
-| filter log.source == &quot;/home/ubuntu/.dynaTrace/easyTravel 2.0.0/easyTravel/log/BusinessBackend.log&quot;
-| lookup 
-[
-  fetch dt.entity.process_group_instance
-  | fieldsAdd id
-  | fieldsAdd entity.name
-  | fieldsAdd services=runs[dt.entity.service]
-  | expand serviceId=services
-], sourceField: dt.source_entity, lookupField:id, prefix:&quot;pgi.&quot;
-| filter isNotNull(pgi.entity.name)
-| lookup 
-[
-
-]
-</code></pre></div>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>fetch logs
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>| filter log.source == &quot;/home/ubuntu/.dynaTrace/easyTravel 2.0.0/easyTravel/log/BusinessBackend.log&quot;
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>| lookup 
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>[
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>  fetch dt.entity.process_group_instance
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>  | fieldsAdd id
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>  | fieldsAdd entity.name
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>  | fieldsAdd services=runs[dt.entity.service]
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>  | expand serviceId=services
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>], sourceField: dt.source_entity, lookupField:id, prefix:&quot;pgi.&quot;
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>| filter isNotNull(pgi.entity.name)
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>| lookup 
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>[
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>]
+</span></code></pre></div>
 Once successful, you will notice that <code>BookingService</code> is the only service name returned. More on why that's the case later....</p>
 <h3 id="exploring-the-entity-model-and-semantic-dictionary-with-describe">Exploring the Entity Model and Semantic Dictionary with <code>describe</code><a class="headerlink" href="#exploring-the-entity-model-and-semantic-dictionary-with-describe" title="Permanent link">#</a></h3>
 <p>A quite common scenario when using <code>lookup</code> or <code>join</code> is the need to map the relationships between one key in an observability facet (log, trace, metric) to either another facet or to the topology model itself. A powerful resource for that is the Dynatrace <a href="https://docs.dynatrace.com/docs/discover-dynatrace/references/semantic-dictionary">semantic dictionary</a>, a reference that outlines the standards used for monitoring data in Dynatrace and their respective domain-specific data models. </p>
 <p>Using DQL, a quick way to determine what data model fields are present for a given data object / entity is by using <code>describe</code>. By running <code>describe</code>, Dynatrace will retrieve the on-read schema definition for that data object. </p>
 <p>Syntax:
-<div class="highlight"><pre><span></span><code>describe entityObject
-</code></pre></div></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>describe entityObject
+</span></code></pre></div></p>
 <p>For instance, if you run <code>describe dt.entity.process_group_instance</code>, you will then know all the possible fields and their data types for the PGI entity in the entity model. Many entity queries will only return the <code>id</code> and <code>entity.name</code> fields on a <code>fetch</code>, and therefore you will need to use <code>describe</code> and the semantic dictionary to ascertain what other fields to add to the <code>fetch</code>. </p>
 <p>As a way to "automate" the field addition for given <code>fetch</code>, let's use that <code>describe dt.entity.process_group_instance</code> call, export the result as a CSV, and then open the output in Excel. From Excel, we can transform the <code>field</code> column to add in all fields to a <code>fetch</code> using the Excel formula below:</p>
-<p><div class="highlight"><pre><span></span><code>=CONCAT(&quot;| fieldsAdd &quot;,A2) 
-</code></pre></div>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>=CONCAT(&quot;| fieldsAdd &quot;,A2) 
+</span></code></pre></div>
 (propagate <code>A2</code> to <code>A3</code>, <code>A4</code>, etc.)</p>
 <p>The result should look something like the screenshot below.
 <img alt="describe Output in Excel" src="../img/describe_excel.png" />
@@ -979,30 +984,30 @@ Once successful, you will notice that <code>BookingService</code> is the only se
 <p><strong>⏩ Try it out</strong>: Determine how many load balancer data fields are present in the Dynatrace data model for an AWS application load balancer. </p>
 <p><strong>⏩ Try it out</strong>: Starting with the DQL snippet for a host system CPU timeseries (see below), use <code>describe</code> and <code>lookup</code> to figure out the AWS Availability Zone for that server. You will need two <code>lookup</code> commands.</p>
 <p>Snippet:
-<div class="highlight"><pre><span></span><code>timeseries avg(dt.host.cpu.system), by: { host.name, dt.entity.host }, filter: { matchesValue(host.name, &quot;ip-172-31-23-111.ec2.internal&quot;) }
-| fieldsAdd value.A = arrayAvg(`avg(dt.host.cpu.system)`)
-| fieldsAdd hostId = entityAttr(dt.entity.host, &quot;id&quot;)
-| lookup 
-[
-
-]
-| lookup
-[
-
-]
-</code></pre></div></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>timeseries avg(dt.host.cpu.system), by: { host.name, dt.entity.host }, filter: { matchesValue(host.name, &quot;ip-172-31-23-111.ec2.internal&quot;) }
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>| fieldsAdd value.A = arrayAvg(`avg(dt.host.cpu.system)`)
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>| fieldsAdd hostId = entityAttr(dt.entity.host, &quot;id&quot;)
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>| lookup 
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>[
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>]
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>| lookup
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>[
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>]
+</span></code></pre></div></p>
 <p>Output:
 <img alt="AWS Availability Zone" src="../img/lookup_aws_az.png" /></p>
 <h3 id="topology-traversal-and-intent-passing-with-entityattr">Topology Traversal and Intent Passing With <code>entityAttr</code><a class="headerlink" href="#topology-traversal-and-intent-passing-with-entityattr" title="Permanent link">#</a></h3>
 <p>In the last exercise, note the use of the command <code>entityAttr</code>: <a href="https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-query-language/functions/general-functions#entity-attr">Documentation</a>. This command allows you to traverse the Dynatrace data model for a given entity (for example, <code>dt.entity.host</code>) on a particular field for that model. However, to do that, you need to know the fields that you have for that data object, likely requiring you to use <code>describe</code> to get those details.</p>
 <p>Let's say you wanted to grab all outbound PGI callers for a particular PGI using <code>entityAttr</code>. You're getting that process information from its CPU usage. To do that, you could first describe <code>dt.entity.process_group_instance</code> and find the fields for that data object. Then, you would find the fields you care about and call them out for that data object with the following approach:</p>
-<div class="highlight"><pre><span></span><code>timeseries avg(dt.process.cpu.usage), by: { dt.entity.process_group_instance }
-| fieldsAdd entity.name = entityName(dt.entity.process_group_instance)
-| fieldsAdd id = entityAttr(dt.entity.process_group_instance, &quot;id&quot;)
-| fieldsAdd calls = entityAttr(dt.entity.process_group_instance, &quot;calls&quot;)
-| fieldsAdd outboundPGICount = arraySize(calls[dt.entity.process_group_instance])
-| expand outboundPGI = calls[dt.entity.process_group_instance]
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>timeseries avg(dt.process.cpu.usage), by: { dt.entity.process_group_instance }
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>| fieldsAdd entity.name = entityName(dt.entity.process_group_instance)
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>| fieldsAdd id = entityAttr(dt.entity.process_group_instance, &quot;id&quot;)
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>| fieldsAdd calls = entityAttr(dt.entity.process_group_instance, &quot;calls&quot;)
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>| fieldsAdd outboundPGICount = arraySize(calls[dt.entity.process_group_instance])
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>| expand outboundPGI = calls[dt.entity.process_group_instance]
+</span></code></pre></div>
 <p>Here, the <code>dt.entity.process_group_instance</code> data object has additional semantic details added via <code>entityAttr</code> with the <code>id</code> and <code>calls</code> lines. For any data object, you can use <code>entityName</code> to return the <code>entity.name</code> field for that object. <code>calls</code> is what is used for outbound PGI callers, and that line then returns an array of PGIs that are called by a particular process. As such, you can get a count of the outbound PGIs from that process by using <code>arraySize</code>, and then you can map the individual PGIs themselves through an <code>expand</code>. </p>
 <p>To map the array elements appropriately, you need to call the suitable object for that topological link; for <code>calls</code> and <code>called_by</code> with <code>dt.entity.process_group_instance</code>, you will use <code>dt.entity.process_group_instance</code>, but this could vary based on what you are linking topologically. For example, if you were referencing <code>runs</code> with <code>dt.entity.process_group_instance</code>, you would want to return a list of services, and therefore you would use <code>dt.entity.service</code> instead.</p>
 <p>When you use <code>entityAttr</code>, your queries are enriched with the entity model, thereby allowing you to pass intents between apps. In turn, you can perform an <strong>Open record with</strong> to other apps on records returned by a query. Without <code>entityAttr</code>, you often will unable to pass intents appropriately, preventing you from opening the record elsewhere.</p>
@@ -1046,39 +1051,39 @@ Once successful, you will notice that <code>BookingService</code> is the only se
 <p><strong>Outer Join</strong>
 <img alt="Outer Join" src="../img/outer_join_set_diagram.png" /></p>
 <p>Let's walk through an example query for an inner <code>join</code> for service IDs from log records:
-<div class="highlight"><pre><span></span><code>fetch logs
-| join
-[
-  fetch dt.entity.service
-  | fieldsAdd id
-  | fieldsAdd entity.name
-], kind:{inner}, on:{left[dt.source_entity] == right[id]}, prefix: &quot;service.&quot;
-| filter isNotNull(service.entity.name)
-</code></pre></div></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>fetch logs
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>| join
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>[
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>  fetch dt.entity.service
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>  | fieldsAdd id
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>  | fieldsAdd entity.name
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>], kind:{inner}, on:{left[dt.source_entity] == right[id]}, prefix: &quot;service.&quot;
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>| filter isNotNull(service.entity.name)
+</span></code></pre></div></p>
 <p>Similar to a <code>lookup</code>, we are mapping the field <code>dt.source_entity</code> in the left (<code>A</code>) table to service IDs in the right (<code>B</code>) table. The mapping is accomplished by the line: <code>on:{left[dt.source_entity] == right[id]}</code>. To use an inner join, we set <code>kind:{inner}</code>. Finally, we add a prefix "service." to all resulting entries. Like <code>lookup</code>, it is good practice to place the right-side mapping field (here, <code>id</code>) in the query, as well as <code>entity.name</code>. </p>
 <p>If there are no matches between the left (<code>A</code>) table and the right (<code>B</code>) table, then, for a <code>join</code> using <code>kind:{inner}</code>, you will have no records returned. Unlike <code>lookup</code>, <code>join</code> will match past the first record. </p>
 <p>Using a left outer join (i.e., <code>kind:{leftOuter}</code>) is useful for finding both matching and non-matching records, as those that do not match on the right (<code>B</code>) table will return as null. In this scenario, you are guaranteed to return some records, with <em>null</em> values for non-matches. </p>
 <p>Let's look at this for a similar version of the previous DQL logs snippet. In this case, we have adjusted the service ID with <code>concat</code> to deliberately break the matches for the right table on a <code>leftOuter</code> join.</p>
-<div class="highlight"><pre><span></span><code>fetch logs
-| join
-[
-  fetch dt.entity.service
-  | fieldsAdd id
-  | fieldsAdd newId = concat(id,&quot;1&quot;)
-  | fieldsAdd entity.name
-], kind:{leftOuter}, on:{left[dt.source_entity] == right[newId]}, prefix: &quot;service.&quot;
-| limit 10
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>fetch logs
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>| join
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>[
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>  fetch dt.entity.service
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>  | fieldsAdd id
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>  | fieldsAdd newId = concat(id,&quot;1&quot;)
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>  | fieldsAdd entity.name
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>], kind:{leftOuter}, on:{left[dt.source_entity] == right[newId]}, prefix: &quot;service.&quot;
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>| limit 10
+</span></code></pre></div>
 <p>Run this with both <code>leftOuter</code> and <code>inner</code> joins. You will notice that <code>leftOuter</code> returns records with null fields while <code>inner</code> does not. </p>
 <p><img alt="leftouter and inner" src="../img/leftouter_and_inner_same_query.png" /></p>
 <p><strong>⏩ Try it out</strong>: Starting with the snippet below, modify it so that you can determine the single value percentage of EC2 instances in the environment. Hint: on your <code>summarize</code>, you will need to use a <code>countIf</code>. What happens when you change the <code>kind:</code> value for <code>join</code>?</p>
-<div class="highlight"><pre><span></span><code>timeseries avg(dt.host.cpu.usage), by: { dt.entity.host }
-| fieldsAdd dt.entity.host.name = entityName(dt.entity.host)
-| fieldsAdd value.A = arrayAvg(`avg(dt.host.cpu.usage)`)
-
-...
-| fields ec2Percentage
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>timeseries avg(dt.host.cpu.usage), by: { dt.entity.host }
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>| fieldsAdd dt.entity.host.name = entityName(dt.entity.host)
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>| fieldsAdd value.A = arrayAvg(`avg(dt.host.cpu.usage)`)
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>...
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>| fields ec2Percentage
+</span></code></pre></div>
 <h2 id="continue">Continue<a class="headerlink" href="#continue" title="Permanent link">#</a></h2>
 <!--TODO: Update Continue Section -->
 <p>In the next section, we'll wrap up what we've learned in this lab today. </p>
@@ -1104,6 +1109,8 @@ Once successful, you will notice that <code>BookingService</code> is the only se
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -1116,6 +1123,46 @@ Once successful, you will notice that <code>BookingService</code> is the only se
       </main>
       
         <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../2-getting-started/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 2. Getting started">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                2. Getting started
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../4-wrap-up/" class="md-footer__link md-footer__link--next" aria-label="Next: 4. Wrap Up">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                4. Wrap Up
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -1139,7 +1186,7 @@ Once successful, you will notice that <code>BookingService</code> is the only se
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.code.annotate", "navigation.instant", "navigation.tracking", "navigation.top", "search.highlight", "search.suggest"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.code.annotate", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.top", "navigation.sections", "navigation.footer", "toc.follow", "search.highlight", "search.suggest", "search.share"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
