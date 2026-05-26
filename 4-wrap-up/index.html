@@ -439,12 +439,6 @@
 
 
 <h1 id="wrap-up">Wrap Up<a class="headerlink" href="#wrap-up" title="Permanent link">#</a></h1>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  dynatrace.sendBizEvent('page_load', {"page": "4. Wrap Up"})
-});
-</script>
-
 <h3 id="what-you-learned-today">What You Learned Today<a class="headerlink" href="#what-you-learned-today" title="Permanent link">#</a></h3>
 <p>You explored how to connect data using the <code>append</code>, <code>data</code>, <code>lookup</code>, and <code>join</code> commands in DQL to combine data from multiple sources. </p>
 <p>Understanding <code>data</code>:
@@ -567,8 +561,19 @@ document.addEventListener('DOMContentLoaded', function() {
     <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.code.annotate", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.top", "navigation.sections", "navigation.footer", "toc.follow", "search.highlight", "search.suggest", "search.share"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
+  
       <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
       
     
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof dynatrace !== 'undefined') {
+        dynatrace.sendBizEvent('page_load', {'page': "4. Wrap Up"});
+      }
+    });
+  </script>
+  
+
   </body>
 </html>
