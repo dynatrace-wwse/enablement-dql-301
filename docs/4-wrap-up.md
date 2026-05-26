@@ -1,6 +1,5 @@
 # Wrap Up
 
---8<-- "snippets/send-bizevent/4-wrap-up.js"
 
 ### What You Learned Today 
 You explored how to connect data using the `append`, `data`, `lookup`, and `join` commands in DQL to combine data from multiple sources. 

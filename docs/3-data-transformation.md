@@ -1,6 +1,5 @@
 # Data Transformation
 
---8<-- "snippets/send-bizevent/3-data-transformation.js"
 
 In this lab module, we will explore how to transform data from various sources using `join`, `lookup`, `append`, and `data` commands. We will look at data from logs, traces, the entity model, and raw sources to accomplish this.
 
