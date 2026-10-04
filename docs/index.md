@@ -1,3 +1,11 @@
+---
+description: Combine data from several sources in DQL with data, append, lookup and join, and explore the entity model and semantic dictionary with describe. You work through it in Notebooks on the Dynatrace Playground.
+tags:
+  - classic
+  - dql
+  - notebooks
+---
+
 
 --8<-- "snippets/dt-enablement.md"
 
